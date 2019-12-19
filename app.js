@@ -31,8 +31,6 @@ router.get("/api/users", async (ctx, next)=>{
 // 路由中间件
 app.use(router.routes(), router.allowedMethods());
 
-// module.exports = app
-
 app.listen(3000, ()=>{
   console.log("服务启动，端口3000")
 })
@@ -45,7 +43,7 @@ function testUnit(count){
   originRequest(`http://localhost:3000/api/data/${num}`, {encoding: null}, ()=>{})
   setTimeout(()=>{
     testUnit(count-1)
-  }, 1000)
+  }, 500)
 }
 
 testUnit(20)  // 表示测试执行次数
