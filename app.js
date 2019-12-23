@@ -14,7 +14,7 @@ const cacheConfig = {
   refreshTime: "00:00:00"  // 刷新缓存时刻每日0点,假设时间规则是时分秒
 }
 
-// 缓存中间件
+// 缓存中间件y
 app.use(new Cache(cacheConfig))
 
 // 动态路由匹配，表示/api/data下的所有接口

@@ -3,16 +3,16 @@ const schedule = require('node-schedule')
 
 class Cache {
   constructor(options){
-    this.url = options.url
+    this.url = options.url 
     this.method = options.method
-    this.refreshTime = this.formatTime(options.refreshTime)
+    const [hour, minute, second] = options.refreshTime.split(':')
     this.allCacheData = {} // 缓存对象,存储所有缓存数据
     this.currentId = ""  // 匹配动态路由中的id，将作为缓存对象中的key
 
     this.rule = new schedule.RecurrenceRule();
-    this.rule.hour = this.refreshTime.hour
-    this.rule.minute = this.refreshTime.minute
-    this.rule.second = this.refreshTime.second
+    this.rule.hour = hour
+    this.rule.minute = minute
+    this.rule.second = second
 
     this.myCache = this.myCache.bind(this)
 
@@ -66,16 +66,6 @@ class Cache {
       this.allCacheData = {}
     　console.log("执行清空缓存任务");
     })
-  }
-  // 获取时分秒
-  formatTime(time){
-    let $time = time.split(':')
-    let timeObj = {
-      hour: parseInt($time[0]),
-      minute: parseInt($time[1]),
-      second: parseInt($time[2]),
-    }
-    return timeObj
   }
 
   // 打印请求耗时，数据来自缓存、接口
