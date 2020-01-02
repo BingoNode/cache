@@ -32,30 +32,6 @@ class Cache {
     let isMatchUrl = ctx.url.match(regexp)
 
     let startTime = new Date().getTime()
-    /* await new Promise(async (resolve, reject)=>{
-      if(isMatchMethod && isMatchUrl){
-        // 获取id
-        this.currentId = ctx.url.replace(this.url, "")
-
-        if(this.allCacheData[this.currentId]!==undefined){ // 缓存中有数据
-          // 打印
-          this.printResult(ctx.url, startTime, "缓存")
-          resolve()
-        }else{  // 没有缓存数据
-
-          // 发送请求
-          let data = await getData(this.currentId)
-
-          // 把请求回来的数据放入缓存，方便之后访问
-          this.allCacheData[this.currentId] = data
-          // 打印
-          this.printResult(ctx.url, startTime, "请求")
-          resolve()
-        }
-      }else{  // 不属于指定的url接口
-        resolve()
-      }
-    }) */
     if(isMatchMethod && isMatchUrl){
       // 获取id
       this.currentId = ctx.url.replace(this.url, "")
