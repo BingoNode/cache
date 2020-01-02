@@ -32,7 +32,7 @@ class Cache {
     let isMatchUrl = ctx.url.match(regexp)
 
     let startTime = new Date().getTime()
-    await new Promise(async (resolve, reject)=>{
+    /* await new Promise(async (resolve, reject)=>{
       if(isMatchMethod && isMatchUrl){
         // 获取id
         this.currentId = ctx.url.replace(this.url, "")
@@ -55,10 +55,31 @@ class Cache {
       }else{  // 不属于指定的url接口
         resolve()
       }
-    })
+    }) */
+    if(isMatchMethod && isMatchUrl){
+      // 获取id
+      this.currentId = ctx.url.replace(this.url, "")
+
+      if(this.allCacheData[this.currentId]!==undefined){ // 缓存中有数据
+        // 打印
+        this.printResult(ctx.url, startTime, "缓存")
+        next()
+      }else{  // 没有缓存数据
+
+        // 发送请求
+        let data = await getData(this.currentId)
+
+        // 把请求回来的数据放入缓存，方便之后访问
+        this.allCacheData[this.currentId] = data
+        // 打印
+        this.printResult(ctx.url, startTime, "请求")
+        next()
+      }
+    }else{  // 不属于指定的url接口
+      next()
+    }
     // 把本次请求的结果挂到ctx.request上，之后在响应给界面的时候可以取到
-    ctx.request.currentData = this.allCacheData[this.currentId]
-    next()
+    // ctx.request.currentData = this.allCacheData[this.currentId]
   }
   // 刷新缓存事件
   refresh(){
